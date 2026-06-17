@@ -70,33 +70,43 @@ content lives only inside flow blocks.
 
 ## 3. The typed-block primitive / 类型块原语
 
-**EN** — One fence for all structured content. The fence is a run of `:` (≥3).
+**EN** — One fence for all structured content. The fence is a run of `=` (≥3).
 A type name dispatches handling; the attribute object is optional.
 
 ```
-::: <type> <attrs>?
+=== <type> <attrs>?
 <body>
-:::
+===
 ```
 
-- Nesting uses longer fences (`::::` wraps `:::`).
+- Nesting uses longer fences (`====` wraps `===`).
 - The **type registry** declares each type's body mode: `raw` (verbatim, e.g.
   `code`, `figure`, `math`) or `flow` (parsed, e.g. `note`, `aside`).
 - Unknown types are a build **warning**, body preserved as raw (forward-compat).
 
-**中文** — 所有结构化内容共用一种围栏。围栏是连续的 `:`（≥3 个）。类型名决定
+**中文** — 所有结构化内容共用一种围栏。围栏是连续的 `=`（≥3 个）。类型名决定
 处理方式；属性对象可选。
 
 ```
-::: <类型> <属性>?
+=== <类型> <属性>?
 <正文>
-:::
+===
 ```
 
-- 嵌套用更长的围栏（`::::` 包住 `:::`）。
+- 嵌套用更长的围栏（`====` 包住 `===`）。
 - **类型注册表**声明每种类型的正文模式：`raw`（原样，如 `code`、`figure`、
   `math`）或 `flow`（解析，如 `note`、`aside`）。
 - 未知类型产生构建**告警**，正文按 raw 保留（向前兼容）。
+
+**Fence rationale / 围栏选型** — EN: `=` is chosen over `:` and `-`. Within UTM,
+headings use ATX `#` (not setext) and there is no `---`/`===` thematic-break or
+frontmatter rule, so a run of `=` carries **no competing meaning** and also reads
+as a strong divider. `-` is rejected: a run of `-` collides with thematic breaks,
+YAML frontmatter, setext H2 underlines and list markers.
+中文：选 `=` 而非 `:` 或 `-`。UTM 内部标题用 ATX `#`（非 setext），且没有
+`---`/`===` 这类分隔线或 frontmatter 规则，所以一串 `=` **不承载任何其他含义**，
+视觉上也像一道强分隔。`-` 被否决：一串 `-` 会与分隔线、YAML frontmatter、
+setext 二级标题下划线、列表符号全都冲突。
 
 ### EBNF (draft) / EBNF（草稿）
 
@@ -107,7 +117,7 @@ block         = flow-block | typed-block ;
 typed-block   = fence , SP , type , [ SP , attrs ] , NL ,
                 body ,
                 close-fence ;
-fence         = ":::" , { ":" } ;            (* open: N colons, N>=3 *)
+fence         = "===" , { "=" } ;            (* open: N equals signs, N>=3 *)
 close-fence   = fence ;                       (* same length as open *)
 type          = NAME ;                        (* e.g. code, table, figure *)
 body          = { LINE } ;                    (* raw or flow per registry *)
@@ -177,21 +187,21 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
 
 **(a) Visual form** — human-written, source looks like a table:
 ```
-::: table {#budget caption="Annual cost"}
+=== table {#budget caption="Annual cost"}
 | Plan     | Months | Rate |
 |----------|-------:|-----:|
 | Org      |      1 |   30 |
 | AsciiDoc |      2 |   30 |
-:::
+===
 ```
 
 **(b) Data form** — machine-generatable, spans & compute declared as attrs:
 ```
-::: table {#budget format=csv header=1 compute="Total = Months * Rate"}
+=== table {#budget format=csv header=1 compute="Total = Months * Rate"}
 Plan,     Months, Rate, Total
 Org,      1,      30,
 AsciiDoc, 2,      30,
-:::
+===
 ```
 
 - `span` for merged cells is declared, never drawn: `span="r2c1:2x1"` (no ASCII
@@ -204,21 +214,21 @@ AsciiDoc, 2,      30,
 
 **(a) 可视化形态** — 人手写，源码就像表：
 ```
-::: table {#budget caption="年成本"}
+=== table {#budget caption="年成本"}
 | 方案     | 人月 | 单价 |
 |----------|-----:|-----:|
 | Org      |    1 |   30 |
 | AsciiDoc |    2 |   30 |
-:::
+===
 ```
 
 **(b) 数据形态** — 可机器生成，跨格与计算用属性声明：
 ```
-::: table {#budget format=csv header=1 compute="小计 = 人月 * 单价"}
+=== table {#budget format=csv header=1 compute="小计 = 人月 * 单价"}
 方案,     人月, 单价, 小计
 Org,      1,    30,
 AsciiDoc, 2,    30,
-:::
+===
 ```
 
 - 合并单元格用 `span` 声明、绝不画线：`span="r2c1:2x1"`（无 ASCII 画框，保证可
@@ -234,12 +244,12 @@ AsciiDoc, 2,    30,
 the *protocol*, not the language.
 
 ```
-::: figure {#flow kind=mermaid caption="Review flow"}
+=== figure {#flow kind=mermaid caption="Review flow"}
 graph LR
   A[Draft] --> B{Review}
   B -->|ok|   C[Publish]
   B -->|back| A
-:::
+===
 ```
 
 - `kind` selects a pluggable renderer (`mermaid`, `graphviz`, `d2`, `plantuml`, …).
@@ -251,12 +261,12 @@ graph LR
 **中文** — 块类型 `figure` 托管外部图形 DSL。格式定义*协议*，不定义语言。
 
 ```
-::: figure {#flow kind=mermaid caption="评审流程"}
+=== figure {#flow kind=mermaid caption="评审流程"}
 graph LR
   A[草稿] --> B{评审}
   B -->|通过| C[发布]
   B -->|打回| A
-:::
+===
 ```
 
 - `kind` 选择可插拔渲染器（`mermaid`、`graphviz`、`d2`、`plantuml`…）。
