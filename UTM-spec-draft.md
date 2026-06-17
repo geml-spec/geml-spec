@@ -119,6 +119,39 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
 
 ## 5. Inline content & links / 内联内容与链接
 
+### 5.1 Inline elements / 内联元素
+
+**EN** — Inline elements appear only inside flow blocks.
+
+| Syntax | Meaning |
+|--------|---------|
+| `*emphasis*` | emphasis |
+| `**strong**` | strong |
+| `` `code` `` | code span (verbatim; nothing parsed inside) |
+| `~~strike~~` | strikethrough |
+| `![alt](src)` | inline image; an attribute object is allowed: `![alt](src){#fig}` |
+| `\` at line end | hard line break |
+| `\` + ASCII punctuation | escape: the punctuation is literal |
+
+- Emphasis/strong delimiters MUST attach to a non-space character and MUST NOT
+  span block boundaries.
+
+**中文** — 内联元素只出现在流式块内部。
+
+| 语法 | 含义 |
+|------|------|
+| `*强调*` | 强调（emphasis） |
+| `**加重**` | 加重（strong） |
+| `` `代码` `` | 代码片段（原样；内部不解析） |
+| `~~删除~~` | 删除线 |
+| `![alt](src)` | 内联图片；可带属性对象：`![alt](src){#fig}` |
+| 行尾 `\` | 强制换行 |
+| `\` + ASCII 标点 | 转义：该标点取字面值 |
+
+- 强调/加重定界符必须贴住非空白字符，且不得跨块边界。
+
+### 5.2 Links & references / 链接与引用
+
 **EN** — Internal and cross-document references are validated at build time.
 
 | Form | Meaning |
@@ -142,6 +175,21 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
 
 - 外链选项放进属性对象：`[文字](url){rel=nofollow target=_blank}`。
 - 无法解析的 `#id` 或 `other.utm#id` 是构建**错误**。
+
+### 5.3 Precedence / 优先级
+
+**EN**
+1. Backslash escapes and code spans are recognized first; their contents are not
+   parsed further.
+2. Then images, links, and auto-refs (`[[#id]]`); a link or ref MUST NOT nest
+   inside another link or ref.
+3. Then emphasis, strong, and strikethrough.
+
+**中文**
+1. 先识别反斜杠转义与代码片段；其内容不再进一步解析。
+2. 再识别图片、链接与自动引用（`[[#id]]`）；链接或引用不得嵌套在另一个链接或
+   引用内部。
+3. 最后识别强调、加重与删除线。
 
 ---
 
