@@ -119,6 +119,8 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
   word is a string. Arrays, dates and nested tables are not supported.
 - A `=== meta` block holds document metadata as one `key=val` per line, using the
   value typing above.
+- Attribute order is insignificant; the recommended order is `#id`, then `.class`,
+  then `key=val`.
 
 **中文**
 - `{#budget}` 设定块 id 为 `budget`。文档内 id 必须唯一。
@@ -129,6 +131,7 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
 - 属性值类型：带引号 `"…"` 恒为字符串；`true`/`false` 为布尔；匹配整数/浮点
   语法的裸词为数字；其余裸词为字符串。不支持数组、日期与嵌套表。
 - `=== meta` 块以每行一个 `key=val` 承载文档元数据，沿用上述属性值类型规则。
+- 属性顺序不影响语义；推荐顺序为 `#id`、`.class`、`key=val`。
 
 ---
 

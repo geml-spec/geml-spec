@@ -6,10 +6,8 @@ title = "General Expressive Markup Language"
 version = "0.1"
 status = "draft"
 extension = ".geml"
+description = "This document is itself written in GEML."
 ===
-
-This document is itself written in GEML. / 本文档本身用 GEML 编写。
-External reference: [CommonMark](https://spec.commonmark.org).
 
 ## 1. Constraints / 约束 {#constraints}
 
@@ -72,7 +70,7 @@ inside flow blocks.
   `data`（每行一个 `key=val`，如 `meta`）。
 - 未知类型产生构建告警，其正文按 raw 保留。
 
-=== code {lang=ebnf #grammar caption="Core grammar"}
+=== code {#grammar lang=ebnf caption="Core grammar"}
 document      = { block } ;
 block         = flow-block | typed-block ;
 
@@ -108,6 +106,8 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
   word is a string. Arrays, dates and nested tables are not supported.
 - A `=== meta` block holds document metadata as one `key=val` per line, using the
   value typing above.
+- Attribute order is insignificant; the recommended order is `#id`, then `.class`,
+  then `key=val`.
 
 **中文**
 - `{#budget}` 设定块 id 为 `budget`，文档内 id 必须唯一。
@@ -117,6 +117,7 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
 - 属性值类型：带引号 `"…"` 恒为字符串；`true`/`false` 为布尔；匹配整数/浮点语法
   的裸词为数字；其余裸词为字符串。不支持数组、日期与嵌套表。
 - `=== meta` 块以每行一个 `key=val` 承载文档元数据，沿用上述属性值类型规则。
+- 属性顺序不影响语义；推荐顺序为 `#id`、`.class`、`key=val`。
 
 ## 5. Inline content & links / 内联内容与链接 {#inline}
 
@@ -217,10 +218,11 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;
 ## 6. Tables / 表格 {#tables}
 
 **EN** — Block type `table`, two interchangeable bodies parsed to one model.
-The live table [[#budget]] uses the data form with a computed column.
+Form (a) is shown as source; form (b) below is a live table referenced by
+[[#budget]].
 
-==== code {lang=geml caption="(a) Visual form"}
-=== table {#budget caption="Annual cost"}
+==== code {lang=geml caption="(a) Visual form, shown as source"}
+=== table {#cost caption="Annual cost"}
 | Plan     | Months | Rate |
 |----------|-------:|-----:|
 | Org      |      1 |   30 |
@@ -228,13 +230,11 @@ The live table [[#budget]] uses the data form with a computed column.
 ===
 ====
 
-==== code {lang=geml caption="(b) Data form"}
-=== table {#budget format=csv header=1 compute="Total = Months * Rate"}
+=== table {#budget format=csv header=1 compute="Total = Months * Rate" caption="Annual cost (data form)"}
 Plan,     Months, Rate, Total
 Org,      1,      30,
 AsciiDoc, 2,      30,
 ===
-====
 
 - Merged cells are declared, not drawn: `span="r2c1:2x1"`.
 - `compute` formulas operate per row over columns referenced by header name or
