@@ -27,6 +27,34 @@ cd geml-parser
 npm install
 npm run build
 node dist/geml.js ../GEML-spec-draft.geml   # → document-model JSON
+node dist/geml.js convert in.md -o out.geml # Markdown → GEML
+npm test                                    # conformance checks
 ```
 
-**Status:** 0.1 draft.
+### Markdown → GEML
+
+`geml convert <file.md> [-o out.geml]` maps Markdown's block constructs onto
+GEML's typed-block primitive (inline syntax passes through, being a subset):
+
+| Markdown | GEML |
+|----------|------|
+| YAML frontmatter | `=== meta` (data) |
+| ` ``` ` fenced code | `=== code {lang=…}` |
+| `$$ … $$` math | `=== math` |
+| `>` blockquote | `=== note` |
+| GFM pipe table | `=== table` (§6) |
+| setext heading | ATX heading |
+| thematic break (`---`) | dropped (not a GEML construct) |
+
+Milestones:
+
+- **M1** — block scanner: typed-block fences, `meta` data block, headings,
+  lists, paragraphs, attribute objects with §4 value typing.
+- **M2** — inline content (§5: emphasis/strong/strike, code, math, media
+  embeds, links, auto-references, footnotes) and build-time reference
+  validation (§8: unique ids, resolvable internal/cross-document references).
+- **M3** — tables (§6: visual and `csv`/`tsv` forms parsed to one model,
+  per-row `compute` formulas with `sum/avg/min/max/count` aggregates, `span`
+  merges) and the diagram renderer registry (§7: unknown `format` → warning).
+
+**Status:** 0.1 draft, parser covers §3–§8.
