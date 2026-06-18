@@ -1,5 +1,7 @@
 # GEML — General Expressive Markup Language
 
+*English | [中文](README_CN.md)*
+
 **A plain-text markup language where one primitive expresses everything structured.**
 
 > Status: `0.1 draft`
