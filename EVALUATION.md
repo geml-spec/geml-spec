@@ -51,16 +51,18 @@ for two different reasons that happen to point the same way:
 The single move that flips both verdicts is the same one, and it is best said in
 GEML's own voice — as a positioning line GEML should put its name behind:
 
-> **GEML is not a competing runtime to HTML. It is the typed, checkable *source*
-> that compiles *into* HTML** — the very self-contained, interactive artifact you
-> ask an agent to hand-write today, but produced from a small, verifiable model,
-> with the cross-references already checked and the data kept in sync with its
-> chart, and emitting Markdown and PDF from the same source.
+> **GEML is not a competing runtime to HTML — it is the artifact that competes
+> *with* HTML for the one slot that matters: what an agent hands a person.** Not a
+> wall of Markdown, and not a 2,000-line `<div>` file the model has to get right by
+> hand — a single self-contained `.geml` document that a GEML runtime makes live
+> and interactive, with every block typed and reference-checked.
 
-That reframing turns "no raw HTML in the source" and "no renderer" from
-liabilities into the *point* — portable, checkable semantics in; multiple rich
-targets out. It is, not coincidentally, the Pandoc architecture. The rest of this
-document is about what it takes to make that real.
+That positioning turns GEML's two most contested decisions into the pitch:
+banning the raw-HTML escape hatch is what keeps every artifact typed and
+checkable, and "no renderer" inverts from an omission into the headline
+deliverable — the GEML runtime *is* the product, the browser-grade layer that
+makes the artifact live. The rest of this document is about what it takes to make
+that real.
 
 ---
 
@@ -72,14 +74,15 @@ axes that trade off against each other*:
 | Axis | Markdown's position | HTML's position | What GEML must do |
 |---|---|---|---|
 | **Rigor / determinism** | weak (no single parse, fragmented) | n/a (a different game) | **beat Markdown:** one defined parse, a normative test suite |
-| **Expressiveness / rendering** | a ceiling agents have outgrown | the runtime everyone has | **match HTML's output:** a great renderer/compiler |
+| **Expressiveness / rendering** | a ceiling agents have outgrown | the runtime everyone has | **match HTML's output:** a self-contained, interactive artifact a GEML runtime makes live |
 
 Markdown is beaten on rigor; HTML is beaten only by *producing what HTML
-produces*. A format that constrains hard enough to be checkable (the MacFarlane
-win) tends to constrain away the visual richness (the Shihipar win), and vice
-versa. **GEML can only win both axes if it stops trying to *be* the runtime and
-becomes the checkable source that *compiles to* the runtime.** Hold that thought;
-it is the spine of Part 4.
+produces* — a self-contained, interactive thing a person can open and use. A
+format that constrains hard enough to be checkable (the MacFarlane win) tends to
+constrain away the visual richness (the Shihipar win), and vice versa. **GEML wins
+both axes only if its artifact stays typed and checkable *and* a GEML runtime
+renders it — through the browser everyone already has — into something as live as
+the HTML it replaces.** Hold that thought; it is the spine of Part 4.
 
 ---
 
@@ -242,7 +245,8 @@ in this very repository: the README's "renders as" examples are displayed by
 **GitHub's Markdown/HTML renderer**, because GEML has no renderer of its own. A
 format whose own showcase is rendered by translating away from it has not yet
 closed the loop. Define GEML by its AST (it already nearly is) and write the
-converters; that is also exactly the bridge of Part 4.
+renderer that makes a `.geml` file *show* something; that renderer is exactly what
+Part 4 turns into GEML's headline deliverable.
 
 ### 2.7 `.gemlhistory` is scope creep that dilutes the core
 
@@ -351,46 +355,47 @@ self-contained `.html` file is something you *use*. Impressive as the layer
 
 ### 3.4 The bridge, reacted to as Thariq
 
-Here's the framing that flips me from skeptic to interested: **position GEML as
-the typed, checkable *source* that compiles to the self-contained interactive
-HTML artifact I already tell people to hand-ask Claude for.** The two bets were
-never in conflict; they're different layers. The agent authors clean, low-token,
-reference-checked GEML — and gets the malformed-output reduction, the hard error
-on a broken link, the single-source-of-truth tables, the cheap diffs. A GEML
-compiler emits the rich self-contained `.html` (real layout, color, rendered
-diagrams, charts drawn from the table model, **interactivity**) and *also*
-Markdown and PDF from the same source. "No raw HTML in the *source*" stops being a
-restriction and becomes the *point*: portable, checkable semantics in, multiple
-rich targets out. That is strictly better than asking a model to hand-author
-2,000 lines of `<div>` soup and *hoping* the cross-references line up — because
-right now **nothing checks that HTML.**
+Here's the framing that flips me from skeptic to interested: **GEML is the
+artifact, not a rival runtime.** What an agent hands a person is the `.geml` file
+itself, and a GEML runtime renders it — *through the browser everyone already
+has* — into the self-contained, interactive thing I currently tell people to
+hand-ask Claude for in raw HTML. The agent authors clean, low-token,
+reference-checked GEML and gets the malformed-output reduction, the hard error on
+a broken link, the single-source-of-truth tables, the cheap diffs; the runtime
+supplies the layout, color, rendered diagrams, charts drawn from the table model,
+and **interactivity**. "No raw HTML in the source" stops being a restriction and
+becomes the *point*: the artifact stays typed and checkable end to end. That is
+strictly better than asking a model to hand-author 2,000 lines of `<div>` soup and
+*hoping* the cross-references line up — because right now **nothing checks that
+HTML.**
 
 Two things this reframing must own. First, GEML's deliberately closed vocabulary
 (semantic `.class` only, a fixed inline set, a closed chart-channel set) caps the
-*ceiling* of the generated artifact — a compiler can only render affordances the
-format can name. My favorite HTML artifacts use bespoke one-off interactions, so
-GEML either grows a principled "interactive component" block type (escaping the
-closed set *without* reopening the raw-HTML hatch) or concedes it targets the
+*ceiling* of the artifact — a runtime can only render affordances the format can
+name. My favorite HTML artifacts use bespoke one-off interactions, so GEML either
+grows a principled "interactive component" block type (escaping the closed set
+*without* reopening the raw-HTML hatch) or concedes it targets the
 structured-document 80%, not the bespoke-tool 20%. Fine scope — but state it.
-Second, the compiler then **is** the runtime dependency GEML claimed not to need;
-"no renderer" stops being a virtue the moment the value proposition is "it
-compiles to a great artifact." Own that too.
+Second, that runtime then **is** the dependency GEML claimed not to need; "no
+renderer" stops being a virtue the moment the value proposition is "GEML *is* the
+artifact." Rendering *through* the browser keeps the dependency from being fatal —
+but it is still a dependency. Own that too.
 
 ### 3.5 My bar for recommending GEML over Markdown/HTML
 
 Concrete and testable. I'd tell people to use GEML when it ships, demonstrably,
 all of:
 
-1. **An excellent `geml → self-contained-HTML` compiler, *with interactivity*** —
-   single file, any browser, no server — producing at least the affordances my
-   essay names (planning board, annotated diff view, slide deck,
-   sortable/filterable table, side-by-side grid) *from GEML source*. This is the
-   gating item; today it produces nothing.
+1. **An excellent GEML runtime that renders a `.geml` file into a self-contained,
+   interactive artifact** — single file, any browser, no server — producing at
+   least the affordances my essay names (planning board, annotated diff view,
+   slide deck, sortable/filterable table, side-by-side grid). This is the gating
+   item; today it produces nothing.
 2. **A handful of killer self-contained interactive artifacts authored as GEML**,
-   shown next to the HTML a human would otherwise hand-ask for. If the compiled
+   shown next to the HTML a human would otherwise hand-ask for. If the rendered
    artifact isn't as good, the indirection isn't worth it.
 3. **Demonstrated token efficiency vs. hand-HTML** on the *same* artifacts —
-   source tokens and edit-patch tokens — with the compiler closing the visual gap.
+   source tokens and edit-patch tokens — with the runtime closing the visual gap.
    A measured number, not an intuition.
 4. **Evidence current Claude models emit valid GEML** zero-shot or with a short
    system prompt / skill: run a fixture suite and report the **valid-parse rate**
@@ -400,56 +405,67 @@ all of:
 5. **Round-trip editing** — a human or model edits the rendered artifact and the
    change lands back in source without corruption.
 6. **Renderer-availability honesty** — bundle the common diagram renderers into
-   the default compiler so a `diagram` block becomes a *picture* out of the box,
+   the default runtime so a `diagram` block becomes a *picture* out of the box,
    or stop implying diagrams "render."
-7. **The reference-checking and table-as-source-of-truth guarantees survive
-   compilation** into the HTML/PDF the human actually receives — the cross-checks
-   are the differentiator; they can't evaporate in the artifact.
+7. **The reference-checking and table-as-source-of-truth guarantees survive into
+   the rendered artifact** the human actually receives — the cross-checks are the
+   differentiator; they can't evaporate when the runtime draws it.
 
-Bottom line: as a **rival runtime to HTML, GEML loses today.** As the **typed,
-checkable source that compiles to the self-contained interactive HTML artifact I
-already recommend**, it's the most compelling pitch in this review — and the one
+Bottom line: as a from-scratch **rival runtime to HTML, GEML loses today** — and
+it shouldn't try to be one. As the **typed, checkable artifact whose runtime
+renders through the browser**, it competes for exactly HTML's slot — the thing an
+agent hands a person — and it's the most compelling pitch in this review, the one
 place John's "constrain and check" bet and my "HTML effectiveness" bet point the
 same direction. Ship items 1–4 and you won't have to convince me; the artifacts
 will.
 
 ---
 
-## Part 4 — The central tension, and the bridge we both endorse
+## Part 4 — The central tension, and the positioning we both endorse
 
 We came in from opposite ends and converged on the same sentence. Here it is
 jointly and plainly — and deliberately in the first person, because this is the
 sentence GEML should lead with on its own homepage, not a recommendation we are
 making *about* GEML:
 
-> **GEML is not a competing runtime to HTML. It is the typed, checkable *source*
-> that compiles *into* HTML — the very self-contained, interactive artifact you
-> ask an agent to hand-write today, but produced from a small, verifiable model:
-> the cross-references are already checked, the data and its chart are guaranteed
-> in sync, and the same source emits Markdown and PDF besides. HTML is the
-> destination; GEML is the source of truth that reaches it safely.**
+> **GEML is not a competing runtime to HTML — it is the artifact that competes
+> *with* HTML for the one slot that matters: what an agent hands a person.** The
+> deliverable is a single self-contained `.geml` file, and a GEML runtime makes it
+> a live, interactive document — sortable, filterable tables; charts bound to
+> their own data; navigable cross-references; rendered diagrams. It means to win
+> that slot on HTML's own terms — **self-contained and interactive** — while adding
+> what hand-authored HTML cannot: every block is typed and reference-checked, so
+> the interactivity is supplied by the runtime, uniformly and correctly, instead
+> of hand-built in throwaway markup the model must get right line by line. And the
+> thing a person receives stays legible plain text — far cheaper to emit, diff,
+> and edit than the `<div>` soup it replaces.
 
-This is the Pandoc architecture, and it is proven: define the format by its
-abstract document model, then own the converters out of it. It dissolves the
-tension in the two-axis table above. GEML beats Markdown on **rigor** (one defined
-parse, a normative suite) *as a source language*, and it matches HTML on
-**expressiveness** *by compiling to HTML* — without ever asking the source grammar
-to grow event handlers or `<div>` soup. The agent reasons over a small, verifiable
-tree; the human opens the rich result in the runtime they already have.
+This dissolves the tension in the two-axis table above. GEML beats Markdown on
+**rigor** — one defined parse, a normative suite, typed and reference-checked
+blocks — and means to match HTML on **expressiveness** by being self-contained and
+interactive *in its own right*, never asking the model to hand-write event
+handlers or `<div>` soup. The agent emits a small, verifiable document; a GEML
+runtime makes it live. The honest catch lives in that last clause: HTML's deepest
+advantage is that its runtime — the browser — is already on every machine, and
+GEML's is not. So the runtime is GEML's headline deliverable, and it almost
+certainly has to render *through* the browser — the way a Markdown previewer or a
+notebook viewer does — to inherit that ubiquity rather than fight it.
 
 It also reframes GEML's two most contested decisions as features:
 
 - **"No raw-HTML escape hatch"** stops being a restriction and becomes the
-  guarantee that makes multi-target compilation and reference-checking *possible*.
-  Raw HTML is precisely the thing that breaks portability to LaTeX, docx, and a
-  checkable model — MacFarlane has spent fifteen years on exactly that problem in
-  Pandoc.
-- **"No renderer"** must now *invert*: the renderer becomes the headline
-  deliverable, not an omission. The moment the pitch is "compiles to a great
-  artifact," the compiler is the product.
+  guarantee that every artifact stays typed and reference-checked. Raw HTML is
+  exactly the escape that would break the checkable model: the moment a block can
+  carry arbitrary markup, nothing can promise the cross-references resolve or that
+  a chart still matches its data.
+- **"No renderer"** must now *invert*: the GEML runtime becomes the headline
+  deliverable, not an omission. The moment the pitch is "GEML *is* the artifact,"
+  the runtime that makes it live is the product — and shipping it well is the whole
+  game.
 
-The catch is equally plain: **none of this exists yet.** The bridge is a promise
-until the compiler ships and is excellent. That is what the roadmap is for.
+The catch is equally plain: **none of this exists yet.** The positioning is a
+promise until that runtime ships and is excellent. That is what the roadmap is
+for.
 
 ---
 
@@ -468,14 +484,14 @@ neither of us recommends GEML over the status quo.
      lists). Remove "draft" from the EBNF.
    - **Acceptance:** a *second, independent* implementation written only from the
      spec agrees with the reference parser across the entire suite.
-2. **Ship the compiler: `geml → self-contained HTML`, plus `geml → markdown`.**
-   - Single-file HTML, any browser, no server; diagrams and charts render to
-     actual pictures (bundle Mermaid/Graphviz/D2); tables render with their
-     computed columns; reference links resolve. Include at least basic
+2. **Ship the runtime: render `.geml` into a self-contained, interactive artifact.**
+   - One self-contained file, any browser, no server; diagrams and charts render
+     to actual pictures (bundle Mermaid/Graphviz/D2); tables render with their
+     computed columns; cross-references are navigable. Include at least basic
      interactivity (a sortable/filterable table is the minimum bar).
    - **Acceptance:** this repository's own "renders as" examples are produced by
-     the GEML compiler, *not* by GitHub's Markdown renderer. A human with only a
-     browser can open and use the output.
+     the GEML runtime, *not* by GitHub's Markdown renderer. A human with only a
+     browser can open and *use* the artifact.
 3. **Measure agent fluency, and publish it.**
    - Run current Claude models over a GEML fixture suite, zero-shot and with a
      one-page skill / system prompt. Report **valid-parse rate** and
@@ -495,7 +511,7 @@ neither of us recommends GEML over the status quo.
    spans `[text]{.class}`, definition lists, and a **declarable open type
    registry** (`=== typedef` or an external schema) so domains add *checked* block
    types without forking the processor.
-6. **Round-trip editing:** edits to the compiled artifact (or at least a
+6. **Round-trip editing:** edits to the rendered artifact (or at least a
    canonical `html → geml` / `md → geml` path) land back in source without
    corruption, losslessly where the constructs overlap.
 7. **Stop the conversion data loss:** preserve thematic breaks and raw HTML
@@ -507,10 +523,11 @@ neither of us recommends GEML over the status quo.
 8. **Re-scope `.gemlhistory`.** Spin it out of the core pitch; lean on git where
    git exists; keep it only if a crisp git-less audience is the explicit, stated
    target. Stop counting it among the headline differentiators.
-9. **Fix the positioning.** Lead with "**the checkable source that compiles to
-   great HTML**," not "replace md/html." Confront the XML comparison directly, and
-   name the cold-start training-data reality rather than letting the AI-friendly
-   claim imply zero-shot fluency that hasn't been measured.
+9. **Fix the positioning.** Lead with "**GEML is the agent's output artifact —
+   typed, checkable, self-contained, interactive**," not "replace md/html."
+   Confront the XML comparison directly, and name the cold-start training-data
+   reality rather than letting the AI-friendly claim imply zero-shot fluency that
+   hasn't been measured.
 10. **Honesty edits to README/COMPARISON.** State that diagrams don't render
     without a toolchain today; that build-time checking covers *ids*, not body
     *content*; and that the "renders as" examples are produced by an external
@@ -524,10 +541,9 @@ neither of us recommends GEML over the status quo.
 |---|---|---|---|
 | Single defined parse (no ambiguity) | ✗ draft spec, regex parser | normative suite + 2nd implementation agrees | MacFarlane |
 | Lists & emphasis pinned down | ✗ | explicit stated algorithm + examples | MacFarlane |
-| Compiles to self-contained interactive HTML | ✗ none | ships, excellent, bundles renderers | Shihipar |
-| Compiles to Markdown / PDF | ✗ | ships | both |
+| Renders to a self-contained, interactive artifact | ✗ none | runtime ships, excellent, bundles renderers | Shihipar |
 | Diagrams/charts render to pictures by default | ✗ source text only | bundled renderers | Shihipar |
-| Reference checking survives into output | partial (source only) | guaranteed in HTML/PDF | both |
+| Reference checking survives into the artifact | partial (source only) | guaranteed in the rendered output | both |
 | Agent valid-parse rate (with short skill) | unmeasured | high-90s, published | Shihipar |
 | Fence nesting is local/safe | ✗ global depth | ≥-length or named close | both |
 | Formulas are legible, not stringly-typed | ✗ in attributes | own body lines | both |
@@ -550,13 +566,14 @@ right ones, and they descend from the best parts of Djot, Pandoc, and the
 hard-won CommonMark lessons. What holds it back is the same gap on both of our
 axes: it has *described* a rigorous, expressive format without yet *building* the
 two things that would make the description true — a normative specification that
-guarantees one parse, and a compiler that turns the checkable source into the rich
-artifact a human can actually use.
+guarantees one parse, and a runtime that turns the checkable document into the
+live artifact a human can actually use.
 
-Do those two things, adopt the source-that-compiles-to-HTML framing that
-reconciles our two worldviews, and trim the scope creep that distracts from the
-core — and GEML stops being a clever format we admire and becomes one we
-recommend. We would both like to get there. The work between here and there is
+Do those two things, adopt the "GEML *is* the artifact" framing that reconciles
+our two worldviews — a typed, checkable, self-contained, interactive deliverable
+rendered through the browser everyone already has — and trim the scope creep that
+distracts from the core, and GEML stops being a clever format we admire and
+becomes one we recommend. We would both like to get there. The work between here and there is
 clear, finite, and worth doing.
 
 — *John MacFarlane & Thariq Shihipar*
