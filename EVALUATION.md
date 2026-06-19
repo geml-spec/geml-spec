@@ -8,11 +8,11 @@
 
 ## Who is reviewing, and why both
 
-- **John MacFarlane** — author of CommonMark, Djot, and Pandoc. His lens is
+- **John MacFarlane**, author of CommonMark, Djot, and Pandoc. His lens is
   markup-language design and specification rigor. Is the grammar deterministic?
   Is the spec normative? Will two independent implementations agree? Does the
   format earn the claims it makes?
-- **Thariq Shihipar** — engineering lead on Anthropic's Claude Code team and
+- **Thariq Shihipar**, engineering lead on Anthropic's Claude Code team and
   author of *"The Unreasonable Effectiveness of HTML."* His lens is agent
   output. Does this format help a model ship a better artifact to a human? How
   does it fare against HTML on layout, color, interactivity, and round-trip
@@ -27,7 +27,7 @@ recommendation.
 
 ---
 
-## TL;DR — the verdict, and the one move that changes it
+## TL;DR: the verdict, and the one move that changes it
 
 GEML is the most thoughtfully designed plain-text format in its comparison
 table. Its three headline bets are the right instincts, clearly descended from
@@ -88,7 +88,7 @@ thought. It is the spine of Part 4.
 
 ---
 
-## Part 1 — What GEML already gets right
+## Part 1: What GEML already gets right
 
 Credit where it is due, from both of us:
 
@@ -125,7 +125,7 @@ with a serious design, not a careless one.
 
 ---
 
-## Part 2 — John MacFarlane's evaluation: markup design and spec rigor
+## Part 2: John MacFarlane's evaluation, markup design and spec rigor
 
 Let me start by saying GEML has my fingerprints on it, in the best way. The
 attribute syntax is Djot's. The AST orientation is Pandoc's. The
@@ -289,7 +289,7 @@ Two honesty edits for the positioning.
 
 ---
 
-## Part 3 — Thariq Shihipar's evaluation: agent output and the HTML lens
+## Part 3: Thariq Shihipar's evaluation, agent output and the HTML lens
 
 *The following is Thariq's assessment, integrated as the second voice in this
 review.*
@@ -430,7 +430,7 @@ artifacts will.
 
 ---
 
-## Part 4 — The central tension, and the positioning we both endorse
+## Part 4: The central tension, and the positioning we both endorse
 
 We came in from opposite ends and converged on the same sentence. Here it is,
 jointly and plainly, and deliberately in the first person, because this is the
@@ -478,12 +478,12 @@ for.
 
 ---
 
-## Part 5 — A roadmap to "recommended"
+## Part 5: A roadmap to "recommended"
 
 Prioritized, with acceptance criteria. **P0 items are gating.** Without them,
 neither of us recommends GEML over the status quo.
 
-### P0 — Make it true (the gates)
+### P0: Make it true (the gates)
 
 1. **Make the spec normative and deterministic.**
    - Ship a **conformance suite** of input → document-model-JSON cases, several
@@ -511,7 +511,7 @@ neither of us recommends GEML over the status quo.
      can't get there, the format is fighting the training distribution, and the
      P1 footgun fixes become P0.
 
-### P1 — Make it genuinely better than the alternatives
+### P1: Make it genuinely better than the alternatives
 
 4. **Defuse the two footguns.** Relax the close fence to a run of `=` of at least
    the opening length (or add a named/heredoc close), and **lift compute/summary
@@ -528,7 +528,7 @@ neither of us recommends GEML over the status quo.
    through `md → geml`, as a real construct or a faithfully-roundtrippable raw
    block, and add the reverse direction.
 
-### P2 — Scope discipline and honest positioning
+### P2: Scope discipline and honest positioning
 
 8. **Re-scope `.gemlhistory`.** Spin it out of the core pitch. Lean on git where
    git exists. Keep it only if a crisp git-less audience is the explicit, stated
@@ -546,7 +546,7 @@ neither of us recommends GEML over the status quo.
 
 ---
 
-## Part 6 — A scorecard we would both sign
+## Part 6: A scorecard we would both sign
 
 | Criterion | Today | Bar to clear | Owner of the concern |
 |---|---|---|---|
