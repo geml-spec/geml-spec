@@ -249,6 +249,7 @@ GEML is at **`1.0-draft`**. The format is stable enough to write real documents 
 |----------|---------|------|
 | Core spec | [`GEML-spec.md`](GEML-spec.md) | [`GEML-spec_CN.md`](GEML-spec_CN.md) |
 | History extension | [`GEML-history-spec.md`](GEML-history-spec.md) | [`GEML-history-spec_CN.md`](GEML-history-spec_CN.md) |
+| Design review | [`EVALUATION.md`](EVALUATION.md) | [`EVALUATION_CN.md`](EVALUATION_CN.md) |
 
 **Dogfood:** [`GEML-spec.geml`](GEML-spec.geml) is the spec written in GEML itself, and [`GEML-spec.gemlhistory`](GEML-spec.gemlhistory) is a sample of the history format. Conformance is exercised by the reference parser's test suite (`npm test`).
 
