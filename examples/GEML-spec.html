@@ -79,15 +79,15 @@ MAY an optional, permitted behaviour.</p>
   <li>Code, diagrams, tables, math and callouts MUST share the single typed-block</li>
 </ol>
 <p>primitive (see <a href="#typed-block">3. Typed-block primitive / 类型块原语</a>); no per-content grammar.</p>
-<ol>
+<ol start="3">
   <li>Every block MAY carry a stable <code>id</code>; references MUST be resolved and validated</li>
 </ol>
 <p>at build time (see <a href="#inline">5. Inline content &amp; links / 内联内容与链接</a>).</p>
-<ol>
+<ol start="4">
   <li>Graphics MUST embed an external DSL; the format defines the hosting protocol</li>
 </ol>
 <p>only, never a diagram language (see <a href="#graphics">7. Graphics / 图形</a>).</p>
-<ol>
+<ol start="5">
   <li>There is no raw-HTML escape hatch; semantics are not tied to any backend.</li>
   <li>Headings use ATX <code>#</code> only. Setext headings and <code>---</code>/<code>===</code> thematic-break or</li>
 </ol>
@@ -98,7 +98,7 @@ MAY an optional, permitted behaviour.</p>
   <li>代码、图形、表格、公式、提示框必须共用唯一的类型块原语（见 <a href="#typed-block">3. Typed-block primitive / 类型块原语</a>）；</li>
 </ol>
 <p>不为每种内容单设语法。</p>
-<ol>
+<ol start="3">
   <li>每个块可携带稳定 <code>id</code>；引用必须在构建时解析并校验（见 <a href="#inline">5. Inline content &amp; links / 内联内容与链接</a>）。</li>
   <li>图形必须内嵌外部 DSL；格式只定义托管协议，绝不内建图形语言（见 <a href="#graphics">7. Graphics / 图形</a>）。</li>
   <li>不存在原始 HTML 逃逸口；语义不绑定任何后端。</li>
@@ -266,11 +266,11 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;</code></pre>
   <li>Backslash escapes, code spans, and inline math are recognized first; their</li>
 </ol>
 <p>contents are not parsed further.</p>
-<ol>
+<ol start="2">
   <li>Then images, links, auto-refs (<code>[[#id]]</code>), and footnote refs (<code>[^id]</code>); a link</li>
 </ol>
 <p>or ref MUST NOT nest inside another link or ref.</p>
-<ol>
+<ol start="3">
   <li>Then emphasis, strong, and strikethrough.</li>
 </ol>
 <p><strong>中文</strong></p>
@@ -279,7 +279,7 @@ NAME          = ALPHA , { ALPHA | DIGIT | "-" | "_" } ;</code></pre>
   <li>再识别图片、链接、自动引用（<code>[[#id]]</code>）与脚注引用（<code>[^id]</code>）；链接或引用不得</li>
 </ol>
 <p>嵌套在另一个链接或引用内部。</p>
-<ol>
+<ol start="3">
   <li>最后识别强调、加重与删除线。</li>
 </ol>
 <h2 id="tables">6. Tables / 表格</h2>
@@ -346,13 +346,13 @@ the listing form would simply wrap it in a longer fence.</p>
   <li>Parse the typed-block primitive (<a href="#typed-block">3. Typed-block primitive / 类型块原语</a>) and the attribute object</li>
 </ol>
 <p>(<a href="#attributes">4. Attributes &amp; identifiers / 属性与标识符</a>).</p>
-<ol>
+<ol start="2">
   <li>Build a document model in which every block id is unique and resolvable.</li>
   <li>Emit an <strong>error</strong> on any unresolved internal/cross-doc reference (<a href="#inline">5. Inline content &amp; links / 内联内容与链接</a>).</li>
   <li>Treat an unknown block <code>type</code> and an unknown diagram <code>format</code> as <strong>warnings</strong>,</li>
 </ol>
 <p>never errors, preserving the body verbatim.</p>
-<ol>
+<ol start="5">
   <li>NOT require any specific editor, and NOT depend on raw HTML.</li>
 </ol>
 <p>A test suite accompanies the spec: input <code>.geml</code> ⇒ expected document-model JSON.</p>
